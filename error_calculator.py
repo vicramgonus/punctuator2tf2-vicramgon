@@ -157,8 +157,8 @@ def compute_error(target_paths, predicted_paths, only_puncts=True):
         overall_fn += false_negatives.get(p,0.)
 
         punctuation = p
-        precision = (true_positives.get(p,0.) / (true_positives.get(p,0.) + false_positives[p])) if p in false_positives else nan
-        recall = (true_positives.get(p,0.) / (true_positives.get(p,0.) + false_negatives[p])) if p in false_negatives else nan
+        precision = (true_positives.get(p,0.) / (true_positives.get(p,0.) + false_positives.get(p, 0.))) if p in false_positives or p in true_positives else nan
+        recall = (true_positives.get(p,0.) / (true_positives.get(p,0.) + false_negatives.get(p, 0.))) if p in false_negatives or p in true_positives else nan
         f_score = (2. * precision * recall / (precision + recall)) if (precision + recall) > 0 else nan        
         print("{:<16} {:<9} {:<9} {:<9}".format(punctuation, round(precision*100,3), round(recall*100,3), round(f_score*100,3)))
     print("-"*46)
@@ -189,3 +189,4 @@ if __name__ == "__main__":
 
     compute_error([target_path], [predicted_path], only_puncts=only_puncts)    
         
+
