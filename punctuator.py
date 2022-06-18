@@ -116,14 +116,14 @@ def restore(text, word_vocabulary, reverse_punctuation_vocabulary, model):
         # Durante step pasos (hasta el último signo de puntuación o en su defecto hasta el final de la susecuencia)
         for j in range(step):
             # Si el símbolo de puntuación correspondiente es final
-            if punctuations[j] in EOS_PUNCTS:
+            if punctuations[j][0] in EOS_PUNCTS:
                 # Entonces se añade el símbolo (no el token) y el término siguiente, iniciándolo en mayúscula.
                 head = ' ' + subsequence[1+j][0].upper() if j < step - 1 else ' '
-                tail = subsequence[1+j][1:].lower() if head and len(subsequence[1+j]) > 1 else ' '
+                tail = subsequence[1+j][1:].lower() if j < step - 1 and len(subsequence[1+j]) > 1 else ' '
                 res += punctuations[j][0] + head + tail
             
             # Si la palabra siguiente corresponde a un token "<UNK>" entonces se establece en mayúscula 
-            elif j < step - 1 and subsequence[1+j] == word_vocabulary[data.UNK]:
+            elif j < step - 1 and converted_subsequence[1+j] == word_vocabulary[data.UNK]:
                 # Entonces se añade el símbolo (no el token) y el término siguiente, iniciándolo en mayúscula.
                 head = ' ' if punctuations[j] == data.SPACE else punctuations[j][0]
                 tail = ' ' + subsequence[1+j][0].upper() + (subsequence[1+j][1:].lower() if len(subsequence[1+j]) > 1 else ' ')
@@ -207,6 +207,8 @@ if __name__ == "__main__":
         sys.exit("Input file empty.")
 
     # En otro caso, se abre el fichero que almacenará las frases puntadas y capitalizadas
+    with open(output_file, 'w') as fout:
+      fout.write("")
     with open(output_file, 'a') as fout:
       li = 0
       # Para cada linea
