@@ -16,7 +16,7 @@ import fnmatch
 DATA_PATH = "./punctdata"
 
 # Token de representación de final de frase (distinto al de final de línea)
-END = "</S>"
+END = "<END>"
 
 # Token para los términos desconocidos (no presentes en el vocabulario)
 UNK = "<UNK>"
@@ -47,7 +47,7 @@ PUNCT_VOCAB_FILE = os.path.join(DATA_PATH, "punctuations")
 # Tokens que se utilizarán como símbolos de puntuación (es importante que posean como primer elemento el signo 
 # correspondiente y sean coherentes con los especificados en el procesamiento de ficheros o con los que aparecen en ]
 # el fichero de entrada)
-PUNCTUATION_VOCABULARY = {SPACE, ",COMMA", ".PERIOD", "?QUESTIONMARK", "!EXCLAMATIONMARK", ":COLON", ";SEMICOLON"}
+PUNCTUATION_VOCABULARY = [SPACE, ",COMMA", ".PERIOD", "?QUESTIONMARK", "!EXCLAMATIONMARK", ":COLON", ";SEMICOLON"]
 PUNCTUATION_MAPPING = {} # Opcional si algún signo de puntuación se sustituye por otro
 
 # Tokens que sirven como final de frase (no de línea). Típicamente en inglés toda frase termina con ./?/!
